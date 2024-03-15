@@ -26,14 +26,14 @@ const WelcomeScreen = ({navigation}) => {
       .signOut()
       .then(() => {
         setUserLogged(null);
-        console.log('User Logged out');
+        // console.log('User Logged out');
       })
       .catch(error => {
         console.log(error.message);
       });
   };
 
-  console.log(userLogged);
+  //console.log(userLogged);
 
   return (
     <View style={styles.container}>

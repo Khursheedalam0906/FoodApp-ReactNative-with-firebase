@@ -28,19 +28,19 @@ const LoginScreen = ({navigation}) => {
       email,
       password,
     };
+
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
-        var user = userCredentials.user;
-        console.log('Logged in Successfully');
-        //  console.log(user);
+        // var user = userCredentials.user;
+        // console.log('Logged in Successfully');
+        // console.log(user);
         navigation.navigate('Welcomepage');
       })
       .catch(error => {
-        var errorMessage = error.message;
-        console.log(errorMessage);
+        console.log(error.message);
         if (
-          errorMessage ==
+          error.message ==
           '[auth/invalid-email] The email address is badly formatted.'
         ) {
           setCustomError('Please enter a valid email');

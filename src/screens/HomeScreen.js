@@ -1,5 +1,4 @@
 import {
-  StatusBar,
   StyleSheet,
   TextInput,
   View,
@@ -15,8 +14,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {colors} from '../globals/style';
 import firestore from '@react-native-firebase/firestore';
 import CardSlider from '../components/CardSlider';
+import BottomNav from '../components/BottomNav';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [foodData, setFoodData] = useState([]);
   const [vegData, setVegData] = useState([]);
   const [nonVegData, setNonVegData] = useState([]);
@@ -39,46 +39,67 @@ const HomeScreen = () => {
   //console.log(search);
 
   return (
-    <ScrollView style={styles.container}>
-      <StatusBar />
-      <HomeHeadNav />
-      <View style={styles.searchbox}>
-        <AntDesign
-          name="search1"
-          size={24}
-          color="black"
-          style={styles.searchicon}
-        />
-        <TextInput
-          placeholder="search"
-          style={styles.input}
-          onChangeText={text => setSearch(text)}
-        />
+    <View style={styles.container}>
+      <HomeHeadNav navigation={navigation} />
+      <View style={styles.BottomNav}>
+        <BottomNav navigation={navigation} />
       </View>
-      {search != '' && (
-        <View style={styles.searchresultouter}>
-          <FlatList
-            style={styles.searchresultinner}
-            data={foodData}
-            renderItem={({item}) => {
-              if (item.foodName.toLowerCase().includes(search.toLowerCase())) {
-                return (
-                  <View style={styles.searchresult}>
-                    <AntDesign name="arrowright" size={24} color="red" />
-                    <Text style={styles.searchresulttext}>{item.foodName}</Text>
-                  </View>
-                );
-              }
-            }}
+
+      <ScrollView>
+        <View style={styles.searchbox}>
+          <AntDesign
+            name="search1"
+            size={24}
+            color="black"
+            style={styles.searchicon}
+          />
+          <TextInput
+            placeholder="search"
+            style={styles.input}
+            onChangeText={text => setSearch(text)}
           />
         </View>
-      )}
-      <Categories />
-      <OfferSlider />
-      <CardSlider title={"Today's Special"} data={foodData} />
-      <CardSlider title={'NonVeg Lover'} data={nonVegData} />
-      <CardSlider title={'Veg Lover'} data={vegData} />
-    </ScrollView>
+        {search != '' && (
+          <View style={styles.searchresultouter}>
+            <FlatList
+              style={styles.searchresultinner}
+              data={foodData}
+              renderItem={({item}) => {
+                if (
+                  item.foodName.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return (
+                    <View style={styles.searchresult}>
+                      <AntDesign name="arrowright" size={24} color="red" />
+                      <Text style={styles.searchresulttext}>
+                        {item.foodName}
+                      </Text>
+                    </View>
+                  );
+                }
+              }}
+            />
+          </View>
+        )}
+        <Categories />
+        <OfferSlider />
+        <CardSlider
+          title={"Today's Special"}
+          data={foodData}
+          navigation={navigation}
+        />
+        <CardSlider
+          title={'Non-Veg Lover'}
+          data={nonVegData}
+          navigation={navigation}
+        />
+        <CardSlider
+          title={'Veg Lover'}
+          data={vegData}
+          navigation={navigation}
+        />
+      </ScrollView>
+    </View>
   );
 };
 
@@ -130,5 +151,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
     color: colors.text1,
+  },
+  BottomNav: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: colors.col1,
+    zIndex: 20,
   },
 });

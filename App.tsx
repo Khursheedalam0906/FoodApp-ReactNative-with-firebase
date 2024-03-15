@@ -5,6 +5,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpScreen from './src/screens/loginSignUpScreens/SignUpScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import UserProfile from './src/screens/UserProfile';
+import ProductPage from './src/screens/ProductPage';
+import UserCart from './src/screens/UserCart';
+import PlaceOrder from './src/screens/PlaceOrder';
+import TrackOrder from './src/screens/TrackOrder';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +35,31 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={UserProfile}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ProductPage"
+          component={ProductPage}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Cart"
+          component={UserCart}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="PlaceOrder"
+          component={PlaceOrder}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TrackOrder"
+          component={TrackOrder}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

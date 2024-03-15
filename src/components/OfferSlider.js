@@ -16,7 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
   },
   {
     id: 3,
-    image: "../../assets/OfferSliderimg/img2.png",
+    image: "../../assets/OfferSliderimg/img3.png",
   },
 ];     */
 }

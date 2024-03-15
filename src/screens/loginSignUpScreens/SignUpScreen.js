@@ -40,14 +40,6 @@ const SignUpScreen = ({navigation}) => {
   const [successmsg, setSuccessmsg] = useState(null);
 
   const handleSignup = () => {
-    const formData = {
-      name,
-      email,
-      phone,
-      password,
-      //cPassword,
-      address,
-    };
     if (password != cpassword) {
       //  Alert("Password doesn't match");
       setCustomError("Password does't match");
@@ -59,20 +51,30 @@ const SignUpScreen = ({navigation}) => {
     try {
       auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('User Created');
+        .then(userCredentials => {
+          //console.log(userCredentials);
+          // console.log('User Created');
 
           // store all information in firestore
           const userRef = firestore().collection('UserData');
-          userRef
-            .add(formData)
-            .then(() => {
-              console.log('Data added to firestore');
-              setSuccessmsg('User created successfully');
-            })
-            .catch(error => {
-              console.log('firestore error', error);
-            });
+          if (userCredentials?.user.uid) {
+            userRef
+              .add({
+                name,
+                email,
+                phone,
+                password,
+                address,
+                uid: userCredentials?.user.uid,
+              })
+              .then(() => {
+                //   console.log('Data added to firestore');
+                setSuccessmsg('User created successfully');
+              })
+              .catch(error => {
+                console.log('firestore error', error.message);
+              });
+          }
         })
         .catch(error => {
           console.log('sign up firebase error', error.message);
@@ -357,7 +359,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     // justifyContent: "center",
-    marginTop: 10,
+    //marginTop: 10,
   },
   head1: {
     fontSize: titles.title1,
